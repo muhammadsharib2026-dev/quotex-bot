@@ -43,7 +43,7 @@ object OtcDetector {
   val trend=when{delta>0.12->1;delta < -0.12->-1;else->0}
   val lastBias=if(last.bullish)1 else -1
   val majority=when{up>=8->1;down>=8->-1;else->0}
-  val recentBias=cs.takeLast(3).sumOf{if(it.bullish)1 else -1}.let{if(abs(it)==3)it.sign else 0}
+  val recentBias=cs.takeLast(3).sumOf{if(it.bullish)1 else -1}.let{if(abs(it)==3)if(it>0)1 else -1 else 0}
   val strong= sizes.last()>=avg*0.7 && sizes.last()<=avg*2.5
   val rangeTop=cs.dropLast(1).minOf{it.top}
   val rangeBottom=cs.dropLast(1).maxOf{it.bottom}
